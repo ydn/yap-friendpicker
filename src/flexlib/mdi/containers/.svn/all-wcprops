@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/147/trunk/src/flexlib/mdi/containers
+END
+MDIWindow.as
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/147/trunk/src/flexlib/mdi/containers/MDIWindow.as
+END
+MDIWindowState.as
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/128/trunk/src/flexlib/mdi/containers/MDIWindowState.as
+END
+MDICanvas.as
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/128/trunk/src/flexlib/mdi/containers/MDICanvas.as
+END
+MDIWindowControlsContainer.as
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/146/trunk/src/flexlib/mdi/containers/MDIWindowControlsContainer.as
+END

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:controls="qs.controls.*"
+	width="75" height="85" 
+	horizontalScrollPolicy="off"
+	verticalScrollPolicy="off">
+	
+	<mx:Canvas 
+		left="3" top="0" bottom="0" right="3" 
+		click="clickHandler(event)" 
+		mouseChildren="false" buttonMode="true" useHandCursor="true"
+		rollOver="rollOverHandler(event)" 
+		rollOut="rollOutHandler(event)"
+		backgroundColor="{$color}" 
+		horizontalScrollPolicy="off" 
+		verticalScrollPolicy="off">
+		
+		<controls:SuperImage source="{$image_src}" width="50" height="50" borderStyle="solid" borderThickness="1" borderColor="#626262" horizontalCenter="0" top="5"/>	
+		<controls:SuperImage id="statusImg" source="{$status_image}" width="12" height="12" top="0" right="0" borderStyle="none" visible="false"/>
+		<mx:Text id="nameText" text="{$name}" truncateToFit="true" fontFamily="Verdana" fontSize="10" color="#111111" top="55" textAlign="center" left="0" right="0" height="30"/>
+	</mx:Canvas>
+	
+	<mx:Script>
+		<![CDATA[
+			[Bindable] private var $image_src:String = "http://l.yimg.com/us.yimg.com/i/identity/nopic_48.gif";
+			[Bindable] private var $name:String;
+			[Bindable] private var $color:uint = 0xFFFFFF;
+			[Bindable] private var $status_image:Class;
+			
+			[Embed(source="assets/remove-icon.png")]
+			[Bindable] private var $rmIcon:Class;
+			
+			[Embed(source="assets/add-icon.png")]
+			[Bindable] private var $addIcon:Class;
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				if(this.data) {
+					this.setProfileData();
+					this.setSelectedStatus();
+				}
+			}
+
+			protected function clickHandler(event:MouseEvent):void
+			{
+				this.data.selected = !this.data.selected;
+				this.setSelectedStatus();
+			}
+			
+			protected function rollOverHandler(event:MouseEvent):void
+			{
+				statusImg.visible = true;
+			}
+			
+			protected function rollOutHandler(event:MouseEvent):void
+			{
+				statusImg.visible = false;
+			}
+			
+			protected function setProfileData():void
+			{
+				$name = this.data.label;
+				
+				if(this.data.profile) {
+					var profile:Object = this.data.profile;
+					
+					/*
+					if(profile.givenName && profile.familyName) {
+						$name = profile.givenName+' '+profile.familyName;
+					} else if(profile.nickname) {
+						$name = profile.nickname;
+					}
+					*/
+					if(profile.image && profile.image.imageUrl) {
+						$image_src = profile.image.imageUrl;
+					}
+				}
+			}
+			
+			protected function setSelectedStatus():void
+			{
+				$color = (this.data.selected) ? 0xD4ECFD : 0xFFFFFF;
+				$status_image = (this.data.selected) ? $rmIcon : $addIcon;
+			}
+
+		]]>
+	</mx:Script>
+</mx:Canvas>

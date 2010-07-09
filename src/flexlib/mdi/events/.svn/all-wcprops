@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/156/trunk/src/flexlib/mdi/events
+END
+MDIWindowEvent.as
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/128/trunk/src/flexlib/mdi/events/MDIWindowEvent.as
+END
+MDIManagerEvent.as
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/128/trunk/src/flexlib/mdi/events/MDIManagerEvent.as
+END
+MDIEffectEvent.as
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/156/trunk/src/flexlib/mdi/events/MDIEffectEvent.as
+END

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300" xmlns:yahoo="com.yahoo.astra.mx.controls.*" xmlns:zg="com.zachgraves.*" initialize="handleInit(event)">
+	<mx:Style source="assets/css/FriendPicker.css"/>
+	
+	<mx:VBox styleName="fpcontainer" top="15" width="350" horizontalCenter="0" height="480" verticalGap="0">
+		<mx:Canvas styleName="fpinput" height="45" width="100%" top="0" >
+			<yahoo:FriendSelector 
+				id="friendSelector" 
+				styleName="fpselector"
+				labelFields="givenName|familyName" 
+				prompt="Search your contacts"
+				popUpEnabled="false" 
+				selectedCategory="{categorySelector.selectedItem.data}" 
+				autoFillEnabled="true"
+				itemRenderer="com.zachgraves.FriendPhotoItem"
+				dataProviderUpdate="handleDataProviderUpdate(event)" 
+				autoCompleteUpdate="autoCompleteUpdateHandler(event)"
+				connectionsError="connectionsErrorHandler(event)" 
+				height="27" 
+			/>
+		</mx:Canvas>
+		<mx:Canvas id="search" styleName="fpsearch" width="100%" height="30" top="45">
+			<mx:Label verticalCenter="0" left="15" text="View" styleName="fpsearchLabel" />
+			<mx:ComboBox 
+				id="categorySelector" 
+				styleName="fpcategoryBox" 
+				width="210" 
+				height="19"
+				dataProvider="{$categories}"
+				/>
+		</mx:Canvas>
+		<mx:Canvas id="list" styleName="fplist" top="75" bottom="30" left="0" right="0" width="100%" height="100%">
+			<mx:TileList 
+				id="selectedUsersList" 
+				styleName="fptilelist"
+				change="handleListChange(event)"
+				itemRenderer="com.zachgraves.FriendTileItem" 
+				width="100%" 
+				height="100%"
+			/> 
+			<mx:Label id="status" visible="false" text="{$statusText}" horizontalCenter="0" verticalCenter="0" styleName="fperror"/>
+		</mx:Canvas>
+		<mx:Canvas id="bar" width="100%" height="35">
+			<mx:Button styleName="fpcontinue" label="Continue" click="handleSendClick();"/>
+			<zg:AnchorText styleName="fplink" text="Import more contacts" verticalCenter="0" left="5" href="{$importContacts}"/>
+			<zg:AnchorText styleName="fplink" text="Cancel" verticalCenter="0" right="95" width="42" click="handleCancelClick(event)"/>
+		</mx:Canvas>
+	</mx:VBox>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.yahoo.astra.mx.controls.FriendSelector;
+			import com.yahoo.astra.mx.controls.friendSelectorClasses.FriendSelectorController;
+			import com.yahoo.astra.mx.controls.friendSelectorClasses.FriendSelectorEvent;
+			import com.yahoo.oauth.OAuthConsumer;
+			import com.yahoo.social.YahooAccessToken;
+			import com.yahoo.social.YahooApplication;
+			
+			import flash.net.navigateToURL;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			
+			public var params:Object;
+			
+			private static const IMPORT_CONTACTS_URL:String = "http://us.mg0.mail.yahoo.com/yab-fe/?_src=cg&VPC=contact_import_landing";
+			
+			[Bindable] private var $statusText:String;
+			[Bindable] private var $importContacts:String;
+			[Bindable] private var $categories:ArrayCollection = FriendSelectorController.RELATION_CATEGORIES;
+			
+			public function handleInit(event:FlexEvent):void
+			{
+				this.$importContacts = IMPORT_CONTACTS_URL;
+			}
+			
+			public function setup(params:Object):void 
+			{
+				this.params = params;
+				
+				if(this.params.hasOwnProperty('application') && this.params.application) {
+					var app:YahooApplication = this.params.application;
+					if(app.consumer.empty || app.token.empty) {
+						$statusText = ERROR_FRIENDS_STRING;
+						this.status.visible = true;
+						throw new Error('Missing YAP OAuth Credentials');
+					} else {
+						this.application = app;
+					}
+				}
+			}
+			
+			public function get importContactsUrl():String 
+			{
+				return this.$importContacts;
+			}
+			
+			public function set importContactsUrl(value:String):void 
+			{
+				this.$importContacts = value;
+			}
+			
+			[Bindable] public function set application(value:YahooApplication):void
+			{
+				this.friendSelector.application = value;
+			}
+			
+			public function get application():YahooApplication
+			{
+				return this.friendSelector.application;
+			}
+			
+			private function handleListChange(event:ListEvent):void
+			{
+				// resets the main data provider with the list thats been modified with selected users.
+				this.selectedUsersList.invalidateList();
+			}
+			
+			private function handleDataProviderUpdate(event:Event):void
+			{
+				// get the main data, pass into the tile list
+				this.selectedUsersList.dataProvider = friendSelector.listDataProvider;
+				this.selectedUsersList.invalidateList();
+				this.selectedUsersList.invalidateSize();
+				this.selectedUsersList.invalidateProperties();
+				this.selectedUsersList.invalidateDisplayList();
+				
+				if(this.selectedUsersList.dataProvider && this.friendSelector.controller.connections) 
+					this.verifyList();
+			}
+			
+			private function handleSendClick():void
+			{
+				var guids:Array = new Array();
+				
+				for each(var item:Object in this.friendSelector.connections) {
+					if(item.selected) guids.push(item.guid);
+				}
+				
+				var subject:String = params.subject || null;
+				var body:String = params.body || null;
+				
+				switch(this.params.type) {
+					case 'share':
+						this.friendSelector.application.proxy().openShareDialog(guids, subject, body);
+					case 'message':
+					default:
+						this.friendSelector.application.proxy().openMessageDialog(guids, subject, body);
+				}
+			}
+			
+			protected function connectionsErrorHandler(event:FriendSelectorEvent):void
+			{
+				$statusText = ERROR_FRIENDS_STRING;
+				this.status.visible = true;
+			}
+			
+			protected function autoCompleteUpdateHandler(event:Event):void
+			{
+				this.selectedUsersList.invalidateSize();
+				this.selectedUsersList.scrollToIndex(0);
+				this.verifyList();
+			}
+			
+			protected function verifyList():void
+			{
+				var len:int = (this.selectedUsersList.dataProvider as ArrayCollection).length;
+				this.status.visible = (len == 0);
+				$statusText = (len == 0) ? NO_FRIENDS_STR : '';
+			}
+			
+			protected function handleCancelClick(event:MouseEvent):void
+			{
+				if(this.params.cancelURL) {
+					flash.net.navigateToURL(new URLRequest(this.params.cancelURL), this.params.cancelTarget);
+				}
+			}
+			
+			private static const NO_FRIENDS_STR:String = 'No Friends Found';
+			private static const ERROR_FRIENDS_STRING:String = 'Error Fetching Friends';
+		]]>
+	</mx:Script>
+</mx:Canvas>

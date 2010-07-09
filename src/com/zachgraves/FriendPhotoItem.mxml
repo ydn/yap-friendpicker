@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="40" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+	<mx:Image left="5" verticalCenter="0" width="35" height="35" source="{this.data.image.imageUrl}" scaleContent="true"/>
+	<mx:Text text="{$name}" left="45" verticalCenter="-7" truncateToFit="true" fontFamily="Verdana" fontSize="11" right="0" color="#3B3B3B"/>
+	<mx:Label text="{this.data.location}" truncateToFit="true" fontSize="9" color="#7F7F7F" left="47" bottom="3" right="0" selectable="false"/>
+	<mx:Script>
+		<![CDATA[
+			[Bindable] private var $name:String;
+			
+			override public function set data(value:Object):void
+			{
+				$name = null;
+				super.data = value;
+				
+				if(this.data)
+				{
+					$name = (this.data.givenName != undefined && this.data.familyName != undefined) 
+							? this.data.givenName+" "+this.data.familyName
+							: this.data.nickname;
+				} 
+			}
+		]]>
+	</mx:Script>
+</mx:Canvas>

@@ -1,0 +1,79 @@
+/* CSS file */
+
+.fpApplication {
+	backgroundColor:#FFFFFF; 
+}
+
+.fpcontainer {
+	backgroundColor:#FFFFFF; 
+	borderColor:#B0BBC6;
+	borderStyle:solid; 
+	borderThickness:10px; 
+	cornerRadius:10px; 
+}
+
+.fpinput {
+	borderStyle:none;
+	borderThickness:1px; 
+	borderColor:#EAEAEA; 
+	backgroundColor:#FBFBFB;
+}
+
+.fpselector {
+	fontWeight:normal; 
+	fontFamily:'Arial';
+	fontSize:16px;
+	themeColor:#FFB035; 
+	color:#545454;
+	borderColor:#b4b5b5;
+	borderStyle:solid;
+	paddingBottom:2px;
+	paddingLeft:2px;
+	paddingRight:2px;
+	paddingTop:2px;
+	verticalCenter: 0px; 
+	left: 15px; 
+	right:15px;
+}
+
+.fpsearch {
+	backgroundColor:#DBE0E5;
+}
+
+.fpsearchLabel {
+	fontFamily:'Arial';
+	fontSize:14; 
+	color:#777788;
+}
+
+.fpcategoryBox {
+	cornerRadius:0px;
+	borderColor:#B4B5B5;
+	right:30px;
+	verticalCenter:0px;
+}
+
+.fplist {
+	borderStyle:none;
+}
+
+.fptilelist {
+	borderStyle:none;
+	themeColor:#FFFFFF;
+}
+
+.fperror {
+	color:#1D1D1D;
+}
+
+.fpcontinue {
+	cornerRadius:0px;
+	color:#111111; 
+	fontWeight:bold;
+	verticalCenter:0px;
+	right:10px;
+}
+
+.fplink {
+	color:#6D6D6D;
+}
