@@ -7,7 +7,7 @@
 				backgroundGradientAlphas="[1.0, 1.0]" 
 				backgroundGradientColors="[#FFFFFF, #FFFFFF]">
 	
-	<friendpicker:FriendPicker id="friendPicker" width="100%" height="100%" backgroundColor="#FFFFFF"/>
+	<friendpicker:FriendPicker id="friendPicker" width="350" height="500"/>
 	
 	<mx:Script>
 		<![CDATA[
