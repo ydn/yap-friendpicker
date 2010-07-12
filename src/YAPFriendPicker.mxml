@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:friendpicker="com.yahoo.friendpicker.*" layout="absolute" initialize="handleInitialize(event)" styleName="fpApplication"  backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+				xmlns:friendpicker="com.yahoo.friendpicker.*" 
+				layout="absolute"
+				initialize="handleInitialize(event)" 
+				styleName="fpApplication" 
+				backgroundGradientAlphas="[1.0, 1.0]" 
+				backgroundGradientColors="[#FFFFFF, #FFFFFF]">
 	
 	<friendpicker:FriendPicker id="friendPicker" width="100%" height="100%" backgroundColor="#FFFFFF"/>
 	

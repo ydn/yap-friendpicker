@@ -1,52 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300" xmlns:yahoo="com.yahoo.astra.mx.controls.*" xmlns:zg="com.zachgraves.*" initialize="handleInit(event)">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:yahoo="com.yahoo.astra.mx.controls.*" xmlns:zg="com.zachgraves.*" 
+	styleName="fpcontainer" initialize="handleInit(event)">
+	
 	<mx:Style source="assets/css/FriendPicker.css"/>
 	
-	<mx:VBox styleName="fpcontainer" top="15" width="350" horizontalCenter="0" height="480" verticalGap="0">
-		<mx:Canvas styleName="fpinput" height="45" width="100%" top="0" >
-			<yahoo:FriendSelector 
-				id="friendSelector" 
-				styleName="fpselector"
-				labelFields="givenName|familyName" 
-				prompt="Search your contacts"
-				popUpEnabled="false" 
-				selectedCategory="{categorySelector.selectedItem.data}" 
-				autoFillEnabled="true"
-				itemRenderer="com.zachgraves.FriendPhotoItem"
-				dataProviderUpdate="handleDataProviderUpdate(event)" 
-				autoCompleteUpdate="autoCompleteUpdateHandler(event)"
-				connectionsError="connectionsErrorHandler(event)" 
-				height="27" 
-			/>
-		</mx:Canvas>
-		<mx:Canvas id="search" styleName="fpsearch" width="100%" height="30" top="45">
-			<mx:Label verticalCenter="0" left="15" text="View" styleName="fpsearchLabel" />
-			<mx:ComboBox 
-				id="categorySelector" 
-				styleName="fpcategoryBox" 
-				width="210" 
-				height="19"
-				dataProvider="{$categories}"
-				/>
-		</mx:Canvas>
-		<mx:Canvas id="list" styleName="fplist" top="75" bottom="30" left="0" right="0" width="100%" height="100%">
-			<mx:TileList 
-				id="selectedUsersList" 
-				styleName="fptilelist"
-				change="handleListChange(event)"
-				itemRenderer="com.zachgraves.FriendTileItem" 
-				width="100%" 
-				height="100%"
-			/> 
-			<mx:Label id="status" visible="false" text="{$statusText}" horizontalCenter="0" verticalCenter="0" styleName="fperror"/>
-		</mx:Canvas>
-		<mx:Canvas id="bar" width="100%" height="35">
-			<mx:Button styleName="fpcontinue" label="Continue" click="handleSendClick();"/>
-			<zg:AnchorText styleName="fplink" text="Import more contacts" verticalCenter="0" left="5" href="{$importContacts}"/>
-			<zg:AnchorText styleName="fplink" text="Cancel" verticalCenter="0" right="95" width="42" click="handleCancelClick(event)"/>
-		</mx:Canvas>
-	</mx:VBox>
-	
+	<mx:Canvas styleName="fpinput" height="45" width="100%" top="0" >
+		<yahoo:FriendSelector 
+			id="friendSelector" 
+			styleName="fpselector"
+			labelFields="givenName|familyName" 
+			prompt="Search your contacts"
+			popUpEnabled="false" 
+			selectedCategory="{categorySelector.selectedItem.data}" 
+			autoFillEnabled="true"
+			itemRenderer="com.zachgraves.FriendPhotoItem"
+			dataProviderUpdate="handleDataProviderUpdate(event)" 
+			autoCompleteUpdate="autoCompleteUpdateHandler(event)"
+			connectionsError="connectionsErrorHandler(event)" 
+			height="27" 
+		/>
+	</mx:Canvas>
+	<mx:Canvas id="search" styleName="fpsearch" width="100%" height="30" top="45">
+		<mx:Label verticalCenter="0" left="15" text="View" styleName="fpsearchLabel" />
+		<mx:ComboBox 
+			id="categorySelector" 
+			styleName="fpcategoryBox" 
+			width="250" 
+			height="19"
+			dataProvider="{$categories}"
+		/>
+	</mx:Canvas>
+	<mx:Canvas id="list" styleName="fplist" top="75" bottom="30" left="0" right="0" width="100%" height="100%">
+		<mx:TileList 
+			id="selectedUsersList" 
+			styleName="fptilelist"
+			change="handleListChange(event)"
+			itemRenderer="com.zachgraves.FriendTileItem" 
+			width="100%" 
+			height="100%"
+		/> 
+		<mx:Label id="status" visible="false" text="{$statusText}" horizontalCenter="0" verticalCenter="0" styleName="fperror"/>
+	</mx:Canvas>
+	<mx:Canvas id="bar" width="100%" height="35">
+		<mx:Button styleName="fpcontinue" label="Continue" click="handleSendClick();"/>
+		<zg:AnchorText styleName="fplink" text="Import more contacts" verticalCenter="0" left="5" href="{$importContacts}"/>
+		<zg:AnchorText styleName="fplink" text="Cancel" verticalCenter="0" right="95" width="42" click="handleCancelClick(event)"/>
+	</mx:Canvas>
 	<mx:Script>
 		<![CDATA[
 			import com.yahoo.astra.mx.controls.FriendSelector;
@@ -181,4 +180,4 @@
 			private static const ERROR_FRIENDS_STRING:String = 'Error Fetching Friends';
 		]]>
 	</mx:Script>
-</mx:Canvas>
+</mx:VBox>
