@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:friendpicker="com.yahoo.friendpicker.*" layout="absolute" initialize="handleInitialize(event)" styleName="fpApplication"  backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]">
+	
 	<friendpicker:FriendPicker id="friendPicker" width="100%" height="100%" backgroundColor="#FFFFFF"/>
 	
 	<mx:Script>
@@ -10,21 +11,21 @@
 			
 			import mx.events.FlexEvent;
 			
-			private static const CONSUMER_KEY:String = "dj0yJmk9VXdoeWphbGlzeXhxJmQ9WVdrOVJrMHlWVXhUTlRBbWNHbzlNVEU1TWpBME16TTBOQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD0yZQ--";
-			private static const CONSUMER_SECRET:String = "80c2c1eca000c9b43b43647799ffea84c83b8ced";
+			private static const CONSUMER_KEY:String = "YOUR_CONSUMER_KEY";
+			private static const CONSUMER_SECRET:String = "YOUR_CONSUMER_SECRET";
 			
 			private function handleInitialize(event:FlexEvent):void
 			{
 				var flashvars:Object = Application.application.parameters;
-				flashvars.cancelURL = 'http://www.yahoo.com/';
+				
 				var consumer:OAuthConsumer = new OAuthConsumer();
 				consumer.key = CONSUMER_KEY;
 				consumer.secret = CONSUMER_SECRET;
 				
 				var token:YahooAccessToken = new YahooAccessToken();
-				token.key = flashvars.yap_viewer_access_token || 'A=55w7qYb4jyNh5YMScma9FlIIsy78MUDlU8nXNfVEr1P.haSg5_PyzPjhKpM2s_9Q6r1DrED7EmZwAuseR4L1J07umqi3E1pwNjaGUVIRxxlNCDUHjNxB.rQ6Er56JmN2XNDTeQTU6wbSLhNeka8glR5VACFydHfUT2CRcOwU7xRSbypNWSbLwqJYFHAUkpMUx1DlJ6YoPvkydvQG4.ny0gmiL5Nnzx8v7yLb7zmoEkAiuegZIpWoe4SX5UVnrSy45GU5qTn2bmRdA6M1ZGnXzRI6U9VZYdGVj0laIqnjL.IfYt0UWNdC3s11sCBzdOGeh.TqlsU_3qWhZYKkpYeC.qCE0ADdNY7UWfEwXozhgY6IZlnsMaTijDT.hnAr0dHAeGrri5zW03qPUOz9_.Ug85Ru7WFXHypv6HPOJtWaRWOIxe1NBfxMEDda5IZlnO3V0WfkRNBtiJ0eZag0532I1aW7OCe5zJKGxJYreFMCiNScrK.C8.X7EXkJAZrB2VZbSAPA92Bbi0_FbQ3KBDuBDtrKuWbANdQ3QLO8Wey8gH3wju9Ad_1smKy.N.jjgvymhrVZ9gg3CM8pjGQisrdf6qG_tVPrSc14QcXl70GJ1BrDU1Eyay3Mecp.gGdQVS4fB1K441NZUnMCIKfbsHvBtibG4az54lkvMhUOfoqGvnaQ.mZZJacYta6JLubUvWBbULByrKRQNPrfkSvWZTOwP2Jk78nFAvaHLEj3YeeOa.fQju0N9w5eUro6C3yfNqQg8A--';
-				token.secret = flashvars.yap_viewer_access_token_secret || 'e5978886f4e9e07d313b796c22079efd090201e8';
-				token.yahoo_guid = flashvars.yap_viewer_guid || 'JTN7YJFGW3J4IF53MDOD5RF7YU';
+				token.key = flashvars.yap_viewer_access_token;
+				token.secret = flashvars.yap_viewer_access_token_secret;
+				token.yahoo_guid = flashvars.yap_viewer_guid;
 				
 				try {
 					friendPicker.setup({
