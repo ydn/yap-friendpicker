@@ -2,6 +2,7 @@ YAP Friend Picker
 ========================
 
 The YAP Friend Picker is a Flex component that makes it easy to drop-in sharing and messaging capabilities into your YAP application. 
+Using Yahoo! ASTRA and YQL, the 
 
 Yahoo! Application Platform
 =======
@@ -11,8 +12,9 @@ Find documentation and support on Yahoo! Developer Network: http://developer.yah
  * Yahoo! Application Platform - http://developer.yahoo.com/yap/
  * Yahoo! Social APIs - http://developer.yahoo.com/social/
  * Yahoo! Query Language - http://developer.yahoo.com/yql/
+ * Yahoo! ASTRA components - http://developer.yahoo.com/flash/
 
-Hosted on GitHub: http://github.com/yahoo/yos-social-php5/tree/master
+Hosted on GitHub: http://github.com/ydn/yap-friendpicker/tree/master
 
 License
 =======
