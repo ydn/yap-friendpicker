@@ -1,6 +1,8 @@
 YAP Friend Picker
 ========================
 
+The YAP Friend Picker is a Flex component that makes it easy to drop-in sharing and messaging capabilities into your YAP application. 
+
 Yahoo! Application Platform
 =======
 
